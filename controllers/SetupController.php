@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Acara;
-use app\models\AcaraSearch;
+use app\models\Setup;
+use app\models\SetupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AcaraController implements the CRUD actions for Acara model.
+ * SetupController implements the CRUD actions for Setup model.
  */
-class AcaraController extends Controller
+class SetupController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,30 +30,22 @@ class AcaraController extends Controller
     }
 
     /**
-     * Lists all Acara models.
+     * Lists all Setup models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AcaraSearch();
-	//	$query = Acara::find();
-		//$countQuery = clone $query;
-      //  $pages = new Pagination(['totalCount' => $countQuery->count()]);
-		//$models = $query->offset($pages->offset)
-      //  ->limit($pages->limit)
-      //  ->all();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		
+        $searchModel = new SetupSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			//'models' => $models,
-       //  'pages' => $pages,
         ]);
     }
 
     /**
-     * Displays a single Acara model.
+     * Displays a single Setup model.
      * @param string $id
      * @return mixed
      */
@@ -65,21 +57,19 @@ class AcaraController extends Controller
     }
 
     /**
-     * Creates a new Acara model.
+     * Creates a new Setup model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-		//$modelx = new CreateClient();
-        $model = new Acara();
+        $model = new Setup();
 
         if ($model->load(Yii::$app->request->post()) ) {
-			$model->id = md5($model->nama.time());
-			$model->created_at = date('Y-m-d H:i:s');
+			$model->id = md5($model->nama.time().$model->alamat);
+			$model->created_at = date('Y-m-d h:i:s');
 			$model->save();
-            //return $this->redirect(['view', 'id' => $model->id]);
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,7 +78,7 @@ class AcaraController extends Controller
     }
 
     /**
-     * Updates an existing Acara model.
+     * Updates an existing Setup model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -107,7 +97,7 @@ class AcaraController extends Controller
     }
 
     /**
-     * Deletes an existing Acara model.
+     * Deletes an existing Setup model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -120,15 +110,15 @@ class AcaraController extends Controller
     }
 
     /**
-     * Finds the Acara model based on its primary key value.
+     * Finds the Setup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Acara the loaded model
+     * @return Setup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Acara::findOne($id)) !== null) {
+        if (($model = Setup::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
